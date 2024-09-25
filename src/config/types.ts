@@ -5,3 +5,8 @@ export type AppConfig = {
   testMode: boolean;
   cors: CorsOptions;
 };
+
+export type DBConfig = {
+  url: string;
+  dbName: string;
+};
