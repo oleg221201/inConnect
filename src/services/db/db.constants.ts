@@ -4,8 +4,9 @@ import { getCollectionProviderName, getProviders } from '~utils/db.utils';
 export const dbConnectionProvider = 'DATABASE_CONNECTION';
 
 export const collections = {
+  users: 'users',
   organizers: 'organizers',
-  speaker: 'speaker',
+  speaker: 'speakers',
 };
 
 const collectionsNames: string[] = Object.values(collections);
