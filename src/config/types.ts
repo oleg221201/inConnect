@@ -11,3 +11,11 @@ export type DBConfig = {
   url: string;
   dbName: string;
 };
+
+export type AuthConfig = {
+  accessSecret: string;
+  accessExpires: string;
+
+  refreshSecret: string;
+  refreshExpires: string;
+};

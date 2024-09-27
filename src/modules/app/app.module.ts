@@ -7,7 +7,13 @@ import { DatabaseModule } from '../../services/db/db.module';
 import { UserModule } from '../user/user.module';
 import { SpeakerModule } from '../user/speaker/speaker.module';
 import { OrganizerModule } from '../user/organizer/organizer.module';
-
+import { AuthModule } from '../auth/auth.module';
+import * as path from 'path';
+import {
+  AcceptLanguageResolver,
+  // I18nJsonLoader,
+  I18nModule,
+} from 'nestjs-i18n';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,10 +21,22 @@ import { OrganizerModule } from '../user/organizer/organizer.module';
       ignoreEnvFile: true,
       load: Object.values(config),
     }),
+    I18nModule.forRootAsync({
+      useFactory: () => ({
+        fallbackLanguage: 'en',
+        loaderOptions: {
+          path: path.join(__dirname, '../../i18n/'),
+          watch: true,
+        },
+      }),
+      resolvers: [AcceptLanguageResolver],
+      // inject: [],
+    }),
     DatabaseModule,
     UserModule,
     SpeakerModule,
     OrganizerModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

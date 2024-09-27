@@ -1,0 +1,6 @@
+{
+    "AUTH.INVALID_LOGIN_DATA": "Invalid credentials.",
+    "AUTH.LOGIN_TO_PERFORM": "Please login to perform this action.",
+    "AUTH.REFRESH_NOT_FOUND": "Outdated or inactive refreshToken.",
+    "USER.EMAIL_TAKEN": "User with this email already exists."
+}
