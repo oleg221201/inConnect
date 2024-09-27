@@ -13,6 +13,11 @@ export class OrganizerService {
 
   async create(userId: ObjectId | string): Promise<OrganizerModel> {
     const payload: OrganizerModel = {
+      additionalName: null,
+      headline: null,
+      phone: null,
+      description: null,
+      location: null,
       companyInfo: null,
       userId: new ObjectId(userId),
       createdAt: new Date(),

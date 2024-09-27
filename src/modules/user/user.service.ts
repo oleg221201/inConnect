@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Collection } from 'mongodb';
+import { Collection, Filter, MatchKeysAndValues, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { UserModel } from './user.model';
 import { collections } from '../../services/db/db.constants';
@@ -19,14 +19,6 @@ export class UserService {
     const payload: UserModel = {
       ...dto,
       password: hashedPassword,
-      additionalName: '',
-      headline: '',
-      phone: '',
-      description: '',
-      location: {
-        city: '',
-        region: '',
-      },
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -35,7 +27,32 @@ export class UserService {
     return { _id: insertedId, ...payload };
   }
 
-  async findByEmail(email: string): Promise<UserModel> {
+  async findByEmail(email: string): Promise<UserModel | null> {
     return this.userCollection.findOne({ email });
+  }
+
+  findOne(filter: Filter<UserModel>): Promise<UserModel | null> {
+    return this.userCollection.findOne(filter);
+  }
+
+  findById(id: ObjectId | string): Promise<UserModel | null> {
+    return this.userCollection.findOne({ _id: new ObjectId(id) });
+  }
+
+  async updateById(
+    id: string | ObjectId,
+    updateData: MatchKeysAndValues<UserModel>,
+  ): Promise<void> {
+    await this.userCollection.findOneAndUpdate(
+      {
+        _id: new ObjectId(id),
+      },
+      {
+        $set: {
+          ...updateData,
+          updatedAt: new Date(),
+        },
+      },
+    );
   }
 }

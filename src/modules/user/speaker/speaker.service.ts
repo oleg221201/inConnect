@@ -14,6 +14,11 @@ export class SpeakerService {
   async create(userId: ObjectId | string): Promise<SpeakerModel> {
     const payload: SpeakerModel = {
       userId: new ObjectId(userId),
+      additionalName: null,
+      headline: null,
+      phone: null,
+      description: null,
+      location: null,
       readyToTrevel: null,
       tags: [],
       workspaces: [],
