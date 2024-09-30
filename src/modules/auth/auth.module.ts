@@ -9,6 +9,8 @@ import { AuthConfig } from '~config/types';
 import { AUTH_CONFIG } from '~config/constants';
 import { UserModule } from '../user/user.module';
 import { AccessStrategy, RefreshStrategy } from './strategies';
+import { SpeakerModule } from '../user/speaker/speaker.module';
+import { OrganizerModule } from '../user/organizer/organizer.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { AccessStrategy, RefreshStrategy } from './strategies';
       inject: [ConfigService],
     }),
     UserModule,
+    SpeakerModule,
+    OrganizerModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, AccessStrategy, RefreshStrategy],

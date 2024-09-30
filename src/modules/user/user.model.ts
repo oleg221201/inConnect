@@ -7,6 +7,7 @@ export interface UserModel {
   email: string;
   password: string;
   role: UserRole;
+  refreshToken: string;
   createdAt: Date;
   updatedAt: Date;
 }
