@@ -6,8 +6,8 @@ import { AuthConfig } from '~config/types';
 import { AUTH_CONFIG } from '~config/constants';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../auth.types';
-import { UserModel } from 'src/modules/user/user.model';
 import { Injectable } from '@nestjs/common';
+import { AuthRequest } from '~common/interfaces/auth.interface';
 
 @Injectable()
 export class RefreshStrategy extends PassportStrategy(
@@ -25,7 +25,7 @@ export class RefreshStrategy extends PassportStrategy(
     });
   }
 
-  validate(payload: TokenPayload): Promise<UserModel> {
+  validate(payload: TokenPayload): Promise<AuthRequest> {
     return this.authService.validateUserByTokenPayload(payload);
   }
 }

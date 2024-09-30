@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Collection, ObjectId } from 'mongodb';
+import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
 import { SpeakerModel } from './speaker.model';
@@ -31,5 +31,9 @@ export class SpeakerService {
 
     const { insertedId } = await this.speakerCollection.insertOne(payload);
     return { _id: insertedId, ...payload };
+  }
+
+  findOne(filter: Filter<SpeakerModel>): Promise<SpeakerModel | null> {
+    return this.speakerCollection.findOne(filter);
   }
 }

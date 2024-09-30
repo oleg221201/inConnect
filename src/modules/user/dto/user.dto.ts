@@ -8,14 +8,6 @@ export const passwordRegex = new RegExp(
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,24}$/,
 );
 
-class UserLocationDto {
-  @ApiProperty()
-  city: string;
-
-  @ApiProperty()
-  region: string;
-}
-
 export class UserDto implements UserModel {
   @ApiProperty({ type: 'string' })
   @Type(() => String)
@@ -36,20 +28,8 @@ export class UserDto implements UserModel {
   @ApiProperty()
   lastName: string;
 
-  @ApiProperty()
-  additionalName: string;
-
-  @ApiProperty()
-  headline: string;
-
-  @ApiProperty()
-  phone: string;
-
-  @ApiProperty()
-  description: string;
-
-  @ApiProperty()
-  location: UserLocationDto;
+  @Exclude()
+  refreshToken: string;
 
   @ApiProperty()
   createdAt: Date;

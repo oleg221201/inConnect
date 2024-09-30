@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Collection, ObjectId } from 'mongodb';
+import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
 import { OrganizerModel } from './organizer.model';
@@ -26,5 +26,9 @@ export class OrganizerService {
 
     const { insertedId } = await this.organizerCollection.insertOne(payload);
     return { _id: insertedId, ...payload };
+  }
+
+  findOne(filter: Filter<OrganizerModel>): Promise<OrganizerModel | null> {
+    return this.organizerCollection.findOne(filter);
   }
 }

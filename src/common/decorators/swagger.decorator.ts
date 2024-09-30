@@ -73,7 +73,10 @@ export const UseSwagger = ({
   }
 
   possibleCodes.forEach((code) => {
-    if (code === HttpStatus.UNAUTHORIZED || code === HttpStatus.FORBIDDEN)
+    if (
+      auth &&
+      (code === HttpStatus.UNAUTHORIZED || code === HttpStatus.FORBIDDEN)
+    )
       return;
 
     swaggerDocs.push(possibleErrors[code]);
