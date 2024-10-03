@@ -18,6 +18,7 @@ export class UserService {
 
     const payload: UserModel = {
       ...dto,
+      profilePicture: null,
       password: hashedPassword,
       refreshToken: null,
       createdAt: new Date(),

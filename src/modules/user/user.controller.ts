@@ -4,6 +4,11 @@ import {
   Body,
   HttpStatus,
   BadRequestException,
+  Query,
+  Get,
+  Request,
+  UseGuards,
+  Put,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto';
@@ -13,6 +18,12 @@ import { UseSwagger } from '~common/decorators/swagger.decorator';
 import { UserRole } from './user.model';
 import { SpeakerService } from './speaker/speaker.service';
 import { OrganizerService } from './organizer/organizer.service';
+import { UploadQueryDto, UploadUrlDto } from '~common/dto/upload.dto';
+import { RequestWithUser } from '~common/interfaces/auth.interface';
+import { generateUploadUrl } from 'src/services/aws/s3';
+import { AccessTokenGuard } from '~common/guards';
+import { I18n, I18nContext } from 'nestjs-i18n';
+import { ProfilePictureDto } from './dto/profile-picture.dto';
 
 @ApiTags('Users')
 @Controller('user')
@@ -35,11 +46,12 @@ export class UserController {
   @Post()
   async create(
     @Body() createUserDto: CreateUserDto,
+    @I18n() i18n: I18nContext,
   ): Promise<DefaultMessageResponse> {
     const user = await this.userService.findByEmail(createUserDto.email);
 
     if (user) {
-      throw new BadRequestException('User with this email already exists');
+      throw new BadRequestException(i18n.t('error.USER.EMAIL_TAKEN'));
     }
 
     const newUser = await this.userService.create(createUserDto);
@@ -52,5 +64,55 @@ export class UserController {
     }
 
     return { message: `The ${createUserDto.role} was successfully created.` };
+  }
+
+  @UseSwagger({
+    operation: { summary: 'Get url for uploading photo' },
+    response: {
+      description: 'Successfully got url',
+      type: UploadUrlDto,
+      status: HttpStatus.OK,
+    },
+    auth: true,
+    possibleCodes: [HttpStatus.BAD_REQUEST],
+  })
+  @UseGuards(AccessTokenGuard)
+  @Get('/upload-profile-picture')
+  async getUploadUrl(
+    @Request() request: RequestWithUser,
+    @Query() query: UploadQueryDto,
+  ): Promise<UploadUrlDto> {
+    const { _id: userId } = request.user;
+    const { mime } = query;
+    const fileName = `profile-photo/${userId}`;
+
+    const url = await generateUploadUrl(fileName, mime);
+
+    return { url };
+  }
+
+  @UseSwagger({
+    operation: { summary: 'Update profile picture' },
+    response: {
+      description: 'Successfully updated profile picture',
+      type: DefaultMessageResponse,
+      status: HttpStatus.OK,
+    },
+    auth: true,
+    possibleCodes: [HttpStatus.BAD_REQUEST],
+  })
+  @UseGuards(AccessTokenGuard)
+  @Put('/profile-picture')
+  async saveProfilePicture(
+    @Request() request: RequestWithUser,
+    @Body() profilePictureDto: ProfilePictureDto,
+    @I18n() i18n: I18nContext,
+  ): Promise<DefaultMessageResponse> {
+    const { _id: userId } = request.user;
+    const { profilePicture } = profilePictureDto;
+
+    await this.userService.updateById(userId, { profilePicture });
+
+    return { message: i18n.t('message.USER.SUCCESS_UPDATE') };
   }
 }

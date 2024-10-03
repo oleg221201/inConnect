@@ -4,6 +4,7 @@ export interface UserModel {
   _id?: ObjectId;
   firstName: string;
   lastName: string;
+  profilePicture: string;
   email: string;
   password: string;
   role: UserRole;

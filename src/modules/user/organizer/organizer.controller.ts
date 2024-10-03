@@ -7,6 +7,7 @@ import {
   UseGuards,
   Put,
   Body,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
@@ -20,6 +21,8 @@ import { RequestWithUser } from '~common/interfaces/auth.interface';
 import { OrganizerWithUserDto } from './dto/organizer.dto';
 import { DefaultMessageResponse } from '~common/responses';
 import { UpdateOrganizerDto } from './dto/update.dto';
+import { UploadQueryDto, UploadUrlDto } from '~common/dto/upload.dto';
+import { generateUploadUrl } from 'src/services/aws/s3';
 
 @ApiTags('Orgaizers')
 @Controller('organizer')
@@ -69,5 +72,31 @@ export class OrganizerController {
     await this.organizerService.update(organizer._id, updateOrganizerDto);
 
     return { message: 'Successfully updated organizer.' };
+  }
+
+  @UseSwagger({
+    operation: { summary: 'Get url for uploading photo' },
+    response: {
+      description: 'Successfully got url',
+      type: UploadUrlDto,
+      status: HttpStatus.OK,
+    },
+    auth: true,
+    possibleCodes: [HttpStatus.BAD_REQUEST],
+  })
+  @UseGuards(AccessTokenGuard)
+  @Roles(UserRole.organizer)
+  @Get('/upload-company-logo')
+  async getUploadUrl(
+    @Request() request: RequestWithUser,
+    @Query() query: UploadQueryDto,
+  ): Promise<UploadUrlDto> {
+    const { _id: organizerId } = request.user.organizer;
+    const { mime } = query;
+    const fileName = `company-logo/${organizerId}`;
+
+    const url = await generateUploadUrl(fileName, mime);
+
+    return { url };
   }
 }
