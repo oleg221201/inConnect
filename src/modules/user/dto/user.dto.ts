@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 
 // min 6 max 24 symbols, min 1 symbol, min 1 special symbol, min 1 digit
 export const passwordRegex = new RegExp(
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,24}$/,
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{6,24}$/,
 );
 
 export class UserDto implements UserModel {
