@@ -19,3 +19,8 @@ export type AuthConfig = {
   refreshSecret: string;
   refreshExpires: string;
 };
+
+export type AwsConfig = {
+  region: string;
+  bucketName: string;
+};

@@ -28,6 +28,9 @@ export class UserDto implements UserModel {
   @ApiProperty()
   lastName: string;
 
+  @ApiProperty()
+  profilePicture: string;
+
   @Exclude()
   refreshToken: string;
 
