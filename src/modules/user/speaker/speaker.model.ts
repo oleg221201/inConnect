@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { UserModel } from '../user.model';
 
 export interface SpeakerModel {
   _id?: ObjectId;
@@ -46,4 +47,9 @@ export interface SpeakerLecture {
   description: string;
   price: number;
   time: string;
+}
+
+export interface SpeakerWithUser {
+  speaker: SpeakerModel;
+  user: UserModel;
 }

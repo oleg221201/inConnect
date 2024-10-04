@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { UserModel } from '../user.model';
 
 export interface OrganizerModel {
   _id?: ObjectId;
@@ -19,4 +20,9 @@ export interface OrganizerModel {
   userId: ObjectId;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface OrganizerWithUser {
+  organizer: OrganizerModel;
+  user: UserModel;
 }
