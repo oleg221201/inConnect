@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
-import { OrganizerModel } from './organizer.model';
+import { OrganizerModel, OrganizerWithUser } from './organizer.model';
 import { UpdateOrganizerDto } from './dto/update.dto';
 import { UserModel } from '../user.model';
 import { hashPassword } from '~utils/crypto.util';
@@ -35,6 +35,33 @@ export class OrganizerService {
 
   findOne(filter: Filter<OrganizerModel>): Promise<OrganizerModel | null> {
     return this.organizerCollection.findOne(filter);
+  }
+
+  async findByIdWithUser(
+    id: ObjectId | string,
+  ): Promise<OrganizerWithUser | null> {
+    const result = await this.organizerCollection
+      .aggregate([
+        { $match: { _id: new ObjectId(id) } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'users',
+          },
+        },
+      ])
+      .toArray();
+
+    if (!result.length) return null;
+
+    const { users, ...organizer } = result[0];
+
+    return {
+      organizer: organizer as OrganizerModel,
+      user: users[0],
+    };
   }
 
   async update(id: string | ObjectId, dto: UpdateOrganizerDto): Promise<void> {

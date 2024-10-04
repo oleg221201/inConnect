@@ -2,5 +2,7 @@
     "AUTH.INVALID_LOGIN_DATA": "Невалідні дані",
     "AUTH.LOGIN_TO_PERFORM": "Увійдіть, щоб виконати цю дію.",
     "AUTH.REFRESH_NOT_FOUND": "Застарілий або неактивний refreshToken.",
-    "USER.EMAIL_TAKEN": "Користувач з такою поштою вже існує."
+    "USER.EMAIL_TAKEN": "Користувач з такою поштою вже існує.",
+    "ORGANIZER.NOT_FOUND": "Організатора не знайдено.",
+    "SPEAKER.NOT_FOUND": "Лектора не знайдено."
 }

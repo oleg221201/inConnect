@@ -8,21 +8,25 @@ import {
   Put,
   Body,
   Query,
+  Param,
+  NotFoundException,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
-import { OrganizerModel } from './organizer.model';
+import { OrganizerWithUser } from './organizer.model';
 import { OrganizerService } from './organizer.service';
 import { ClassSerializer } from '~common/interceptors/object-serializer.interceptor';
 import { AccessTokenGuard, RoleGuard } from '~common/guards';
 import { Roles } from '~common/decorators/roles.decorator';
-import { UserModel, UserRole } from '../user.model';
+import { UserRole } from '../user.model';
 import { RequestWithUser } from '~common/interfaces/auth.interface';
 import { OrganizerWithUserDto } from './dto/organizer.dto';
 import { DefaultMessageResponse } from '~common/responses';
 import { UpdateOrganizerDto } from './dto/update.dto';
 import { UploadQueryDto, UploadUrlDto } from '~common/dto/upload.dto';
 import { generateUploadUrl } from 'src/services/aws/s3';
+import { IdValidationPipe } from '~common/pipes/validateId.pipe';
+import { I18n, I18nContext } from 'nestjs-i18n';
 
 @ApiTags('Orgaizers')
 @Controller('organizer')
@@ -42,12 +46,34 @@ export class OrganizerController {
   @Roles(UserRole.organizer)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Get('/me')
-  showMe(@Request() request: RequestWithUser): {
-    user: UserModel;
-    organizer: OrganizerModel;
-  } {
+  showMe(@Request() request: RequestWithUser): OrganizerWithUser {
     const { organizer, ...user } = request.user;
     return { user, organizer };
+  }
+
+  @UseSwagger({
+    operation: { summary: 'Get organizer based on id' },
+    response: {
+      description: 'Successfully got organizer',
+      type: OrganizerWithUserDto,
+      status: HttpStatus.OK,
+    },
+    auth: true,
+  })
+  @UseInterceptors(ClassSerializer(OrganizerWithUserDto))
+  @UseGuards(AccessTokenGuard)
+  @Get('/:id')
+  async show(
+    @Param('id', IdValidationPipe) id: string,
+    @I18n() i18n: I18nContext,
+  ): Promise<OrganizerWithUser> {
+    const result = await this.organizerService.findByIdWithUser(id);
+
+    if (!result) {
+      throw new NotFoundException(i18n.t('error.ORGANIZER.NOT_FOUND'));
+    }
+
+    return result;
   }
 
   @UseSwagger({
@@ -66,12 +92,13 @@ export class OrganizerController {
   async update(
     @Request() request: RequestWithUser,
     @Body() updateOrganizerDto: UpdateOrganizerDto,
+    @I18n() i18n: I18nContext,
   ): Promise<DefaultMessageResponse> {
     const { organizer } = request.user;
 
     await this.organizerService.update(organizer._id, updateOrganizerDto);
 
-    return { message: 'Successfully updated organizer.' };
+    return { message: i18n.t('message.SUCCESS_UPDATE') };
   }
 
   @UseSwagger({

@@ -113,6 +113,6 @@ export class UserController {
 
     await this.userService.updateById(userId, { profilePicture });
 
-    return { message: i18n.t('message.USER.SUCCESS_UPDATE') };
+    return { message: i18n.t('message.SUCCESS_UPDATE') };
   }
 }
