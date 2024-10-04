@@ -3,7 +3,7 @@ import { Strategy, ExtractJwt } from 'passport-jwt';
 import { Strategies } from '../auth.constants';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from '~config/types';
-import { AUTH_CONFIG } from '~config/constants';
+import { AUTH_CONFIG } from '~common/constants';
 import { AuthService } from '../auth.service';
 import { TokenPayload } from '../auth.types';
 import { Injectable } from '@nestjs/common';

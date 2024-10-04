@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsPhoneNumber,
@@ -7,20 +8,25 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
 import { OrganizerModel } from '../organizer.model';
 import { passwordRegex } from '../../dto/user.dto';
+import { CITIES_LIST, REGIONS_LIST } from '~common/constants';
+import { Type } from 'class-transformer';
 
 export class UpdateOrganizerLocation {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  city: string; // TODO List of available cities
+  @IsIn(CITIES_LIST)
+  city: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  region: string; // TODO List of available regions
+  @IsIn(REGIONS_LIST)
+  region: string;
 }
 
 export class UpdateOrganizerCompanyInfo {
@@ -41,7 +47,7 @@ export class UpdateOrganizerCompanyInfo {
   description: string;
 
   @ApiProperty()
-  @IsNotEmpty() // TODO check it
+  @IsOptional()
   @IsString()
   logoUrl: string;
 }
@@ -71,6 +77,8 @@ export class UpdateOrganizerDto implements Partial<OrganizerModel> {
   phone: string;
 
   @ApiProperty({ type: UpdateOrganizerLocation })
+  @ValidateNested()
+  @Type(() => UpdateOrganizerLocation)
   @IsNotEmpty()
   location: UpdateOrganizerLocation;
 

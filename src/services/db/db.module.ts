@@ -6,7 +6,7 @@ import {
 } from './db.constants';
 import { Db, MongoClient } from 'mongodb';
 import { ConfigService } from '@nestjs/config';
-import { DB_CONFIG } from '~config/constants';
+import { DB_CONFIG } from '~common/constants';
 import { DBConfig } from '~config/index';
 
 @Module({

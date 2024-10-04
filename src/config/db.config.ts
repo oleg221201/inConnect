@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { DB_CONFIG } from './constants';
+import { DB_CONFIG } from '../common/constants/config.constant';
 import { DBConfig } from './types';
 import { requireEnv } from '~utils/env.utils';
 

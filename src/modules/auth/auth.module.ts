@@ -6,7 +6,7 @@ import { Strategies } from './auth.constants';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from '~config/types';
-import { AUTH_CONFIG } from '~config/constants';
+import { AUTH_CONFIG } from '~common/constants';
 import { UserModule } from '../user/user.module';
 import { AccessStrategy, RefreshStrategy } from './strategies';
 import { SpeakerModule } from '../user/speaker/speaker.module';

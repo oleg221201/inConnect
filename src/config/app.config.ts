@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { AppConfig } from './types';
-import { APP_CONFIG } from './constants';
+import { APP_CONFIG } from '../common/constants/config.constant';
 
 export { AppConfig };
 
