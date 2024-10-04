@@ -3,12 +3,17 @@ import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
 import { SpeakerModel } from './speaker.model';
+import { UpdateSpeakerDto } from './dto/update.dto';
+import { hashPassword } from '~utils/crypto.util';
+import { UserModel } from '../user.model';
 
 @Injectable()
 export class SpeakerService {
   constructor(
     @Inject(getCollectionProviderName(collections.speaker))
     private readonly speakerCollection: Collection<SpeakerModel>,
+    @Inject(getCollectionProviderName(collections.users))
+    private readonly userCollection: Collection<UserModel>,
   ) {}
 
   async create(userId: ObjectId | string): Promise<SpeakerModel> {
@@ -35,5 +40,23 @@ export class SpeakerService {
 
   findOne(filter: Filter<SpeakerModel>): Promise<SpeakerModel | null> {
     return this.speakerCollection.findOne(filter);
+  }
+
+  async update(id: string | ObjectId, dto: UpdateSpeakerDto): Promise<void> {
+    const { password, ...payload } = dto;
+    const organizer = await this.speakerCollection.findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { ...payload, updatedAt: new Date() } },
+    );
+
+    if (password) {
+      const preparedPassword = await hashPassword(password);
+      await this.userCollection.updateOne(
+        {
+          _id: new ObjectId(organizer.userId),
+        },
+        { $set: { password: preparedPassword } },
+      );
+    }
   }
 }

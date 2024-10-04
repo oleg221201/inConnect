@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppConfig } from '~config/index';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import { APP_CONFIG } from '~config/constants';
+import { APP_CONFIG } from '~common/constants';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap(): Promise<void> {

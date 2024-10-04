@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from '~config/types';
-import { AUTH_CONFIG } from '~config/constants';
+import { AUTH_CONFIG } from '~common/constants';
 import { OrganizerService } from '../user/organizer/organizer.service';
 import { SpeakerService } from '../user/speaker/speaker.service';
 import { AuthRequest } from '~common/interfaces/auth.interface';

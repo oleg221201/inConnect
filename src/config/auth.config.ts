@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { AUTH_CONFIG } from './constants';
+import { AUTH_CONFIG } from '../common/constants/config.constant';
 import { AuthConfig } from './types';
 
 export { AuthConfig };

@@ -1,0 +1,17 @@
+export const REGIONS_LIST = [
+  'Agder',
+  'Akershus',
+  'Buskerud',
+  'Finnmark',
+  'Innlandet',
+  'Møre og Romsdal',
+  'Nordland',
+  'Oslo',
+  'Østfold',
+  'Rogaland',
+  'Telemark',
+  'Troms',
+  'Trøndelag',
+  'Vestfold',
+  'Vestland',
+];

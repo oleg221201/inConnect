@@ -1,0 +1,15 @@
+export const CITIES_LIST = [
+  'Oslo',
+  'Bergen',
+  'Stavanger',
+  'Sandnes',
+  'Trondheim',
+  'Kristiansand',
+  'Sandvika',
+  'Drammen',
+  'Asker',
+  'Tønsberg',
+  'Ålesund',
+  'Skien',
+  'Lørenskog',
+];
