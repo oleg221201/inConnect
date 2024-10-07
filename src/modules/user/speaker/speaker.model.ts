@@ -11,7 +11,7 @@ export interface SpeakerModel {
     city: string;
     region: string;
   };
-  readyToTrevel: boolean;
+  readyToTravel: boolean;
   tags: Array<string>;
   workspaces: Array<SpeakerWorkspace>;
   educations: Array<SpeakerEducation>;

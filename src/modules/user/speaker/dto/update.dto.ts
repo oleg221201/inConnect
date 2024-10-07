@@ -167,7 +167,7 @@ export class UpdateSpeakerDto implements Partial<SpeakerModel> {
   @ApiProperty()
   @IsNotEmpty()
   @IsBoolean()
-  readyToTrevel: boolean;
+  readyToTravel: boolean;
 
   @ApiProperty({ isArray: true, type: String })
   @IsArray()

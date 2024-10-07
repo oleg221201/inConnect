@@ -92,7 +92,7 @@ export class SpeakerDto implements SpeakerModel {
   location: UserLocationDto;
 
   @ApiProperty()
-  readyToTrevel: boolean;
+  readyToTravel: boolean;
 
   @ApiProperty()
   tags: string[];

@@ -24,7 +24,7 @@ export class SpeakerService {
       phone: null,
       description: null,
       location: null,
-      readyToTrevel: null,
+      readyToTravel: null,
       tags: [],
       workspaces: [],
       educations: [],
