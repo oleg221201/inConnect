@@ -16,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { DefaultMessageResponse } from '~common/responses';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
 import { UserRole } from './user.model';
-import { SpeakerService } from './speaker/speaker.service';
+import { LecturerService } from './lecturer/lecturer.service';
 import { OrganizerService } from './organizer/organizer.service';
 import { UploadQueryDto, UploadUrlDto } from '~common/dto/upload.dto';
 import { RequestWithUser } from '~common/interfaces/auth.interface';
@@ -30,7 +30,7 @@ import { ProfilePictureDto } from './dto/profile-picture.dto';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly speakerService: SpeakerService,
+    private readonly lecturerService: LecturerService,
     private readonly organizerService: OrganizerService,
   ) {}
 
@@ -59,8 +59,8 @@ export class UserController {
     switch (createUserDto.role) {
       case UserRole.organizer:
         await this.organizerService.create(newUser._id);
-      case UserRole.speaker:
-        await this.speakerService.create(newUser._id);
+      case UserRole.lecturer:
+        await this.lecturerService.create(newUser._id);
     }
 
     return { message: `The ${createUserDto.role} was successfully created.` };

@@ -15,5 +15,5 @@ export interface UserModel {
 
 export enum UserRole {
   organizer = 'organizer',
-  speaker = 'speaker',
+  lecturer = 'lecturer',
 }

@@ -12,88 +12,88 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
-import { SpeakerWithUser } from './speaker.model';
-import { SpeakerService } from './speaker.service';
+import { LecturerWithUser } from './lecturer.model';
+import { LecturerService } from './lecturer.service';
 import { ClassSerializer } from '~common/interceptors/object-serializer.interceptor';
 import { AccessTokenGuard, RoleGuard } from '~common/guards';
 import { Roles } from '~common/decorators/roles.decorator';
 import { UserRole } from '../user.model';
 import { RequestWithUser } from '~common/interfaces/auth.interface';
-import { SpeakerWithUserDto } from './dto/speaker.dto';
+import { LecturerWithUserDto } from './dto/lecturer.dto';
 import { DefaultMessageResponse } from '~common/responses';
-import { UpdateSpeakerDto } from './dto/update.dto';
+import { UpdateLecturerDto } from './dto/update.dto';
 import { IdValidationPipe } from '~common/pipes/validateId.pipe';
 import { I18n, I18nContext } from 'nestjs-i18n';
 
-@ApiTags('Speakers')
-@Controller('speaker')
-export class SpeakerController {
-  constructor(private readonly speakerService: SpeakerService) {}
+@ApiTags('Lecturers')
+@Controller('lecturer')
+export class LecturerController {
+  constructor(private readonly lecturerService: LecturerService) {}
 
   @UseSwagger({
-    operation: { summary: 'Get speaker based on accessToken' },
+    operation: { summary: 'Get lecturer based on accessToken' },
     response: {
-      description: 'Successfully got speaker',
-      type: SpeakerWithUserDto,
+      description: 'Successfully got lecturer',
+      type: LecturerWithUserDto,
       status: HttpStatus.OK,
     },
     auth: true,
   })
-  @UseInterceptors(ClassSerializer(SpeakerWithUserDto))
-  @Roles(UserRole.speaker)
+  @UseInterceptors(ClassSerializer(LecturerWithUserDto))
+  @Roles(UserRole.lecturer)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Get('/me')
-  showMe(@Request() request: RequestWithUser): SpeakerWithUser {
-    const { speaker, ...user } = request.user;
-    return { user, speaker };
+  showMe(@Request() request: RequestWithUser): LecturerWithUser {
+    const { lecturer, ...user } = request.user;
+    return { user, lecturer };
   }
 
   @UseSwagger({
     operation: { summary: 'Get organizer based on id' },
     response: {
       description: 'Successfully got organizer',
-      type: SpeakerWithUserDto,
+      type: LecturerWithUserDto,
       status: HttpStatus.OK,
     },
     auth: true,
   })
-  @UseInterceptors(ClassSerializer(SpeakerWithUserDto))
+  @UseInterceptors(ClassSerializer(LecturerWithUserDto))
   @UseGuards(AccessTokenGuard)
   @Get('/:id')
   async show(
     @Param('id', IdValidationPipe) id: string,
     @I18n() i18n: I18nContext,
-  ): Promise<SpeakerWithUser> {
-    const result = await this.speakerService.findByIdWithUser(id);
+  ): Promise<LecturerWithUser> {
+    const result = await this.lecturerService.findByIdWithUser(id);
 
     if (!result) {
-      throw new NotFoundException(i18n.t('error.SPEAKER.NOT_FOUND'));
+      throw new NotFoundException(i18n.t('error.LECTURER.NOT_FOUND'));
     }
 
     return result;
   }
 
   @UseSwagger({
-    operation: { summary: 'Update speaker' },
+    operation: { summary: 'Update lecturer' },
     response: {
-      description: 'Successfully updated speaker',
+      description: 'Successfully updated lecturer',
       type: DefaultMessageResponse,
       status: HttpStatus.OK,
     },
     auth: true,
     possibleCodes: [HttpStatus.BAD_REQUEST],
   })
-  @Roles(UserRole.speaker)
+  @Roles(UserRole.lecturer)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Put('/me')
   async update(
     @Request() request: RequestWithUser,
-    @Body() updateSpeakerDto: UpdateSpeakerDto,
+    @Body() updateLecturerDto: UpdateLecturerDto,
     @I18n() i18n: I18nContext,
   ): Promise<DefaultMessageResponse> {
-    const { speaker } = request.user;
+    const { lecturer } = request.user;
 
-    await this.speakerService.update(speaker._id, updateSpeakerDto);
+    await this.lecturerService.update(lecturer._id, updateLecturerDto);
 
     return { message: i18n.t('message.USER.SUCCESS_UPDATE') };
   }

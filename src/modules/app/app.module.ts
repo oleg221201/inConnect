@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as config from '~config/index';
 import { DatabaseModule } from '../../services/db/db.module';
 import { UserModule } from '../user/user.module';
-import { SpeakerModule } from '../user/speaker/speaker.module';
+import { LecturerModule } from '../user/lecturer/lecturer.module';
 import { OrganizerModule } from '../user/organizer/organizer.module';
 import { AuthModule } from '../auth/auth.module';
 import * as path from 'path';
@@ -34,7 +34,7 @@ import {
     }),
     DatabaseModule,
     UserModule,
-    SpeakerModule,
+    LecturerModule,
     OrganizerModule,
     AuthModule,
   ],

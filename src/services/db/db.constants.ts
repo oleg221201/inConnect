@@ -6,7 +6,7 @@ export const dbConnectionProvider = 'DATABASE_CONNECTION';
 export const collections = {
   users: 'users',
   organizers: 'organizers',
-  speaker: 'speakers',
+  lecturer: 'lecturers',
 };
 
 const collectionsNames: string[] = Object.values(collections);

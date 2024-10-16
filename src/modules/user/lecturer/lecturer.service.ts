@@ -2,22 +2,22 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
-import { SpeakerModel, SpeakerWithUser } from './speaker.model';
-import { UpdateSpeakerDto } from './dto/update.dto';
+import { LecturerModel, LecturerWithUser } from './lecturer.model';
+import { UpdateLecturerDto } from './dto/update.dto';
 import { hashPassword } from '~utils/crypto.util';
 import { UserModel } from '../user.model';
 
 @Injectable()
-export class SpeakerService {
+export class LecturerService {
   constructor(
-    @Inject(getCollectionProviderName(collections.speaker))
-    private readonly speakerCollection: Collection<SpeakerModel>,
+    @Inject(getCollectionProviderName(collections.lecturer))
+    private readonly lecturerCollection: Collection<LecturerModel>,
     @Inject(getCollectionProviderName(collections.users))
     private readonly userCollection: Collection<UserModel>,
   ) {}
 
-  async create(userId: ObjectId | string): Promise<SpeakerModel> {
-    const payload: SpeakerModel = {
+  async create(userId: ObjectId | string): Promise<LecturerModel> {
+    const payload: LecturerModel = {
       userId: new ObjectId(userId),
       additionalName: null,
       headline: null,
@@ -34,18 +34,18 @@ export class SpeakerService {
       updatedAt: new Date(),
     };
 
-    const { insertedId } = await this.speakerCollection.insertOne(payload);
+    const { insertedId } = await this.lecturerCollection.insertOne(payload);
     return { _id: insertedId, ...payload };
   }
 
-  findOne(filter: Filter<SpeakerModel>): Promise<SpeakerModel | null> {
-    return this.speakerCollection.findOne(filter);
+  findOne(filter: Filter<LecturerModel>): Promise<LecturerModel | null> {
+    return this.lecturerCollection.findOne(filter);
   }
 
   async findByIdWithUser(
     id: ObjectId | string,
-  ): Promise<SpeakerWithUser | null> {
-    const result = await this.speakerCollection
+  ): Promise<LecturerWithUser | null> {
+    const result = await this.lecturerCollection
       .aggregate([
         { $match: { _id: new ObjectId(id) } },
         {
@@ -64,14 +64,14 @@ export class SpeakerService {
     const { users, ...organizer } = result[0];
 
     return {
-      speaker: organizer as SpeakerModel,
+      lecturer: organizer as LecturerModel,
       user: users[0],
     };
   }
 
-  async update(id: string | ObjectId, dto: UpdateSpeakerDto): Promise<void> {
+  async update(id: string | ObjectId, dto: UpdateLecturerDto): Promise<void> {
     const { password, ...payload } = dto;
-    const organizer = await this.speakerCollection.findOneAndUpdate(
+    const organizer = await this.lecturerCollection.findOneAndUpdate(
       { _id: new ObjectId(id) },
       { $set: { ...payload, updatedAt: new Date() } },
     );

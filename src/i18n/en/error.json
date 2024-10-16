@@ -4,5 +4,5 @@
     "AUTH.REFRESH_NOT_FOUND": "Outdated or inactive refreshToken.",
     "USER.EMAIL_TAKEN": "User with this email already exists.",
     "ORGANIZER.NOT_FOUND": "Organizer not found.",
-    "SPEAKER.NOT_FOUND": "Speaker not found."
+    "LECTURER.NOT_FOUND": "Lecturer not found."
 }
