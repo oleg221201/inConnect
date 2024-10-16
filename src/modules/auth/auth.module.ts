@@ -9,7 +9,7 @@ import { AuthConfig } from '~config/types';
 import { AUTH_CONFIG } from '~common/constants';
 import { UserModule } from '../user/user.module';
 import { AccessStrategy, RefreshStrategy } from './strategies';
-import { SpeakerModule } from '../user/speaker/speaker.module';
+import { LecturerModule } from '../user/lecturer/lecturer.module';
 import { OrganizerModule } from '../user/organizer/organizer.module';
 
 @Module({
@@ -33,7 +33,7 @@ import { OrganizerModule } from '../user/organizer/organizer.module';
       inject: [ConfigService],
     }),
     UserModule,
-    SpeakerModule,
+    LecturerModule,
     OrganizerModule,
   ],
   controllers: [AuthController],

@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthConfig } from '~config/types';
 import { AUTH_CONFIG } from '~common/constants';
 import { OrganizerService } from '../user/organizer/organizer.service';
-import { SpeakerService } from '../user/speaker/speaker.service';
+import { LecturerService } from '../user/lecturer/lecturer.service';
 import { AuthRequest } from '~common/interfaces/auth.interface';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly organiserService: OrganizerService,
-    private readonly speakerService: SpeakerService,
+    private readonly lecturerService: LecturerService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
@@ -37,12 +37,12 @@ export class AuthService {
         return { ...user, organizer } as unknown as AuthRequest;
       }
 
-      case UserRole.speaker: {
-        const speaker = await this.speakerService.findOne({
+      case UserRole.lecturer: {
+        const lecturer = await this.lecturerService.findOne({
           userId: new ObjectId(_id),
         });
 
-        return { ...user, speaker } as unknown as AuthRequest;
+        return { ...user, lecturer } as unknown as AuthRequest;
       }
 
       default: {

@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { UserModel } from '../user.model';
 
-export interface SpeakerModel {
+export interface LecturerModel {
   _id?: ObjectId;
   additionalName: string;
   headline: string;
@@ -13,16 +13,16 @@ export interface SpeakerModel {
   };
   readyToTravel: boolean;
   tags: Array<string>;
-  workspaces: Array<SpeakerWorkspace>;
-  educations: Array<SpeakerEducation>;
-  videoLinks: Array<SpeakerVideoLink>;
-  lectures: Array<SpeakerLecture>;
+  workspaces: Array<LecturerWorkspace>;
+  educations: Array<LecturerEducation>;
+  videoLinks: Array<LecturerVideoLink>;
+  lectures: Array<LecturerLecture>;
   userId: ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface SpeakerWorkspace {
+export interface LecturerWorkspace {
   jobTitle: string;
   companyName: string;
   industry: string;
@@ -30,26 +30,26 @@ export interface SpeakerWorkspace {
   to?: Date;
 }
 
-export interface SpeakerEducation {
+export interface LecturerEducation {
   speciality: string;
   university: string;
   from: Date;
   to?: Date;
 }
 
-export interface SpeakerVideoLink {
+export interface LecturerVideoLink {
   title: string;
   url: string;
 }
 
-export interface SpeakerLecture {
+export interface LecturerLecture {
   title: string;
   description: string;
   price: number;
   time: string;
 }
 
-export interface SpeakerWithUser {
-  speaker: SpeakerModel;
+export interface LecturerWithUser {
+  lecturer: LecturerModel;
   user: UserModel;
 }

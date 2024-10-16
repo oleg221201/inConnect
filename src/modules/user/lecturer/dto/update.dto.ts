@@ -17,12 +17,12 @@ import {
   ValidateNested,
 } from 'class-validator';
 import {
-  SpeakerModel,
-  SpeakerEducation,
-  SpeakerLecture,
-  SpeakerVideoLink,
-  SpeakerWorkspace,
-} from '../speaker.model';
+  LecturerModel,
+  LecturerEducation,
+  LecturerLecture,
+  LecturerVideoLink,
+  LecturerWorkspace,
+} from '../lecturer.model';
 import { passwordRegex } from '../../dto/user.dto';
 import {
   CITIES_LIST,
@@ -33,7 +33,7 @@ import {
 import { Type } from 'class-transformer';
 import { LECTURE_TIME_LIST } from '~common/constants/lecture-time.constant';
 
-export class UpdateSpeakerLocation {
+export class UpdateLecturerLocation {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -47,7 +47,7 @@ export class UpdateSpeakerLocation {
   region: string;
 }
 
-export class UpdateSpeakerWorkspace implements SpeakerWorkspace {
+export class UpdateLecturerWorkspace implements LecturerWorkspace {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -75,7 +75,7 @@ export class UpdateSpeakerWorkspace implements SpeakerWorkspace {
   to: Date;
 }
 
-export class UpdateSpeakerEducation implements SpeakerEducation {
+export class UpdateLecturerEducation implements LecturerEducation {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -97,7 +97,7 @@ export class UpdateSpeakerEducation implements SpeakerEducation {
   to: Date;
 }
 
-export class UpdateSpeakerVideoLink implements SpeakerVideoLink {
+export class UpdateLecturerVideoLink implements LecturerVideoLink {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -110,7 +110,7 @@ export class UpdateSpeakerVideoLink implements SpeakerVideoLink {
   url: string;
 }
 
-export class UpdateSpeakerLecture implements SpeakerLecture {
+export class UpdateLecturerLecture implements LecturerLecture {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
@@ -134,7 +134,7 @@ export class UpdateSpeakerLecture implements SpeakerLecture {
   time: string;
 }
 
-export class UpdateSpeakerDto implements Partial<SpeakerModel> {
+export class UpdateLecturerDto implements Partial<LecturerModel> {
   @ApiProperty()
   @IsOptional()
   @IsString()
@@ -158,11 +158,11 @@ export class UpdateSpeakerDto implements Partial<SpeakerModel> {
   @IsPhoneNumber()
   phone: string;
 
-  @ApiProperty({ type: UpdateSpeakerLocation })
+  @ApiProperty({ type: UpdateLecturerLocation })
   @ValidateNested()
-  @Type(() => UpdateSpeakerLocation)
+  @Type(() => UpdateLecturerLocation)
   @IsNotEmpty()
-  location: UpdateSpeakerLocation;
+  location: UpdateLecturerLocation;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -175,33 +175,33 @@ export class UpdateSpeakerDto implements Partial<SpeakerModel> {
   @IsIn(TAGS_LIST, { each: true, message: 'Choose valid tags' })
   tags: string[];
 
-  @ApiProperty({ isArray: true, type: UpdateSpeakerWorkspace })
+  @ApiProperty({ isArray: true, type: UpdateLecturerWorkspace })
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateSpeakerWorkspace)
-  workspaces: UpdateSpeakerWorkspace[];
+  @Type(() => UpdateLecturerWorkspace)
+  workspaces: UpdateLecturerWorkspace[];
 
-  @ApiProperty({ isArray: true, type: UpdateSpeakerEducation })
+  @ApiProperty({ isArray: true, type: UpdateLecturerEducation })
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateSpeakerEducation)
-  educations: UpdateSpeakerEducation[];
+  @Type(() => UpdateLecturerEducation)
+  educations: UpdateLecturerEducation[];
 
-  @ApiProperty({ isArray: true, type: UpdateSpeakerVideoLink })
+  @ApiProperty({ isArray: true, type: UpdateLecturerVideoLink })
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateSpeakerVideoLink)
-  videoLinks: UpdateSpeakerVideoLink[];
+  @Type(() => UpdateLecturerVideoLink)
+  videoLinks: UpdateLecturerVideoLink[];
 
-  @ApiProperty({ isArray: true, type: UpdateSpeakerLecture })
+  @ApiProperty({ isArray: true, type: UpdateLecturerLecture })
   @IsNotEmpty()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => UpdateSpeakerLecture)
-  lectures: UpdateSpeakerLecture[];
+  @Type(() => UpdateLecturerLecture)
+  lectures: UpdateLecturerLecture[];
 
   @ApiProperty()
   @IsString()

@@ -4,5 +4,5 @@
     "AUTH.REFRESH_NOT_FOUND": "Застарілий або неактивний refreshToken.",
     "USER.EMAIL_TAKEN": "Користувач з такою поштою вже існує.",
     "ORGANIZER.NOT_FOUND": "Організатора не знайдено.",
-    "SPEAKER.NOT_FOUND": "Лектора не знайдено."
+    "LECTURER.NOT_FOUND": "Лектора не знайдено."
 }

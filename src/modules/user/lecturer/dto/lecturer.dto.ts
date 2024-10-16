@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  SpeakerEducation,
-  SpeakerLecture,
-  SpeakerModel,
-  SpeakerVideoLink,
-  SpeakerWorkspace,
-} from '../speaker.model';
+  LecturerEducation,
+  LecturerLecture,
+  LecturerModel,
+  LecturerVideoLink,
+  LecturerWorkspace,
+} from '../lecturer.model';
 import { Exclude, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
 import { UserDto } from '../../dto/user.dto';
@@ -18,7 +18,7 @@ class UserLocationDto {
   region: string;
 }
 
-class SpeakerWorkspaceDto implements SpeakerWorkspace {
+class LecturerWorkspaceDto implements LecturerWorkspace {
   @ApiProperty()
   jobTitle: string;
 
@@ -35,7 +35,7 @@ class SpeakerWorkspaceDto implements SpeakerWorkspace {
   to?: Date;
 }
 
-class SpeakerEducationDto implements SpeakerEducation {
+class LecturerEducationDto implements LecturerEducation {
   @ApiProperty()
   speciality: string;
 
@@ -49,7 +49,7 @@ class SpeakerEducationDto implements SpeakerEducation {
   to?: Date;
 }
 
-class SpeakerVideoLinkDto implements SpeakerVideoLink {
+class LecturerVideoLinkDto implements LecturerVideoLink {
   @ApiProperty()
   title: string;
 
@@ -57,7 +57,7 @@ class SpeakerVideoLinkDto implements SpeakerVideoLink {
   url: string;
 }
 
-class SpeakerLectureDto implements SpeakerLecture {
+class LecturerLectureDto implements LecturerLecture {
   @ApiProperty()
   title: string;
 
@@ -71,7 +71,7 @@ class SpeakerLectureDto implements SpeakerLecture {
   time: string;
 }
 
-export class SpeakerDto implements SpeakerModel {
+export class LecturerDto implements LecturerModel {
   @ApiProperty({ type: 'string' })
   @Type(() => String)
   _id?: ObjectId;
@@ -97,17 +97,17 @@ export class SpeakerDto implements SpeakerModel {
   @ApiProperty()
   tags: string[];
 
-  @ApiProperty({ type: SpeakerWorkspaceDto, isArray: true })
-  workspaces: SpeakerWorkspaceDto[];
+  @ApiProperty({ type: LecturerWorkspaceDto, isArray: true })
+  workspaces: LecturerWorkspaceDto[];
 
-  @ApiProperty({ type: SpeakerEducationDto, isArray: true })
-  educations: SpeakerEducationDto[];
+  @ApiProperty({ type: LecturerEducationDto, isArray: true })
+  educations: LecturerEducationDto[];
 
-  @ApiProperty({ type: SpeakerVideoLinkDto, isArray: true })
-  videoLinks: SpeakerVideoLinkDto[];
+  @ApiProperty({ type: LecturerVideoLinkDto, isArray: true })
+  videoLinks: LecturerVideoLinkDto[];
 
-  @ApiProperty({ type: SpeakerLectureDto, isArray: true })
-  lectures: SpeakerLectureDto[];
+  @ApiProperty({ type: LecturerLectureDto, isArray: true })
+  lectures: LecturerLectureDto[];
 
   @Exclude()
   userId: ObjectId;
@@ -119,12 +119,12 @@ export class SpeakerDto implements SpeakerModel {
   updatedAt: Date;
 }
 
-export class SpeakerWithUserDto {
+export class LecturerWithUserDto {
   @ApiProperty()
   @Type(() => UserDto)
   user: UserDto;
 
   @ApiProperty()
-  @Type(() => SpeakerDto)
-  speaker: SpeakerDto;
+  @Type(() => LecturerDto)
+  lecturer: LecturerDto;
 }
