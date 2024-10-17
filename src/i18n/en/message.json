@@ -1,3 +1,4 @@
 {
-    "SUCCESS_UPDATE": "Successfully updated."
+    "SUCCESS_UPDATE": "Successfully updated.",
+    "SUCCESS_CREATE": "Successfully created."
 }

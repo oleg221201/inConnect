@@ -10,7 +10,7 @@ import { UserModel } from '../user.model';
 @Injectable()
 export class LecturerService {
   constructor(
-    @Inject(getCollectionProviderName(collections.lecturer))
+    @Inject(getCollectionProviderName(collections.lecturers))
     private readonly lecturerCollection: Collection<LecturerModel>,
     @Inject(getCollectionProviderName(collections.users))
     private readonly userCollection: Collection<UserModel>,
