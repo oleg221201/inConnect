@@ -8,6 +8,7 @@ export const collections = {
   organizers: 'organizers',
   lecturers: 'lecturers',
   requests: 'requests',
+  occupiedPeriod: 'occupied-periods',
 };
 
 const collectionsNames: string[] = Object.values(collections);

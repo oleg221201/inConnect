@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ObjectIdValidator } from '~common/validators/objectId.validator';
+import { IsFutureDate } from '~common/decorators/date.decorator';
 
 export class CreateRequestDto {
   @ApiProperty()
@@ -28,6 +29,7 @@ export class CreateRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsDateString()
+  @IsFutureDate()
   date: string;
 
   @ApiProperty()

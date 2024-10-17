@@ -53,9 +53,9 @@ export class RequestController {
     @Request() request: RequestWithUser,
     @I18n() i18n: I18nContext,
   ): Promise<DefaultMessageResponse> {
-    const isLecturerExists = await this.lecturerService.findOne({
-      _id: new ObjectId(createRequestDto.lecturerId),
-    });
+    const isLecturerExists = await this.lecturerService.findById(
+      createRequestDto.lecturerId,
+    );
 
     if (!isLecturerExists) {
       throw new BadRequestException(i18n.t('error.LECTURER.NOT_FOUND'));

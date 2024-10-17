@@ -43,6 +43,10 @@ export class LecturerService {
     return this.lecturerCollection.findOne(filter);
   }
 
+  findById(id: ObjectId | string): Promise<LecturerModel | null> {
+    return this.lecturerCollection.findOne({ _id: new ObjectId(id) });
+  }
+
   async findByIdWithUser(
     id: ObjectId | string,
   ): Promise<LecturerWithUser | null> {
