@@ -9,11 +9,8 @@ import { LecturerModule } from '../user/lecturer/lecturer.module';
 import { OrganizerModule } from '../user/organizer/organizer.module';
 import { AuthModule } from '../auth/auth.module';
 import * as path from 'path';
-import {
-  AcceptLanguageResolver,
-  // I18nJsonLoader,
-  I18nModule,
-} from 'nestjs-i18n';
+import { AcceptLanguageResolver, I18nModule } from 'nestjs-i18n';
+import { CalendarModule } from '../calendar/calendar.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,13 +27,13 @@ import {
         },
       }),
       resolvers: [AcceptLanguageResolver],
-      // inject: [],
     }),
     DatabaseModule,
     UserModule,
     LecturerModule,
     OrganizerModule,
     AuthModule,
+    CalendarModule,
   ],
   controllers: [AppController],
   providers: [AppService],
