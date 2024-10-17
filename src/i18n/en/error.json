@@ -6,5 +6,7 @@
     "ORGANIZER.NOT_FOUND": "Organizer not found.",
     "LECTURER.NOT_FOUND": "Lecturer not found.",
     "REQUEST.NOT_FOUND": "Request not found.",
-    "REQUEST.NOT_PERMITED": "You cannot interact with this request."
+    "REQUEST.NOT_PERMITED": "You cannot interact with this request.",
+    "OCCUPIED_PERIOD.OVERLAP": "The specified occupied period overlaps on already existing occupied periods.",
+    "OCCUPIED_PERIOD.REQUEST_OVERLAP": "The specified occupied period overlaps on already existing request."
 }

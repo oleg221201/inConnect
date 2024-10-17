@@ -8,5 +8,6 @@ import { LecturerModule } from 'src/modules/user/lecturer/lecturer.module';
   imports: [DatabaseModule, LecturerModule],
   controllers: [RequestController],
   providers: [RequestService],
+  exports: [RequestService],
 })
 export class RequestModule {}
