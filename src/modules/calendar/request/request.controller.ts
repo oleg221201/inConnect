@@ -95,6 +95,31 @@ export class RequestController {
   }
 
   @UseSwagger({
+    operation: { summary: 'Get assigned requests' },
+    response: {
+      description: 'Successfully got requests',
+      type: RequestDto,
+      isArray: true,
+      status: HttpStatus.OK,
+    },
+    auth: true,
+    possibleCodes: [HttpStatus.BAD_REQUEST],
+  })
+  @UseGuards(AccessTokenGuard, RoleGuard)
+  @Roles(UserRole.lecturer)
+  @Get('/lecturer/my')
+  async getLecturersRequests(
+    @Request() request: RequestWithUser,
+  ): Promise<RequestModel[]> {
+    const lecturerId = request.user.lecturer._id;
+
+    return this.requestService.find({
+      lecturerId: new ObjectId(lecturerId),
+      date: { $gte: new Date() },
+    });
+  }
+
+  @UseSwagger({
     operation: { summary: 'Approve' },
     response: {
       description: 'Successfully updated profile picture',
