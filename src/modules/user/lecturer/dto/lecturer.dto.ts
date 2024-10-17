@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   LecturerEducation,
+  LecturerTestimonials,
   LecturerLecture,
   LecturerModel,
   LecturerVideoLink,
@@ -47,6 +48,14 @@ class LecturerEducationDto implements LecturerEducation {
 
   @ApiProperty()
   to?: Date;
+}
+
+class LecturerTestimonialsDto implements LecturerTestimonials {
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  text: string;
 }
 
 class LecturerVideoLinkDto implements LecturerVideoLink {
@@ -102,6 +111,9 @@ export class LecturerDto implements LecturerModel {
 
   @ApiProperty({ type: LecturerEducationDto, isArray: true })
   educations: LecturerEducationDto[];
+
+  @ApiProperty({ type: LecturerTestimonialsDto, isArray: true })
+  testimonials: LecturerTestimonialsDto[];
 
   @ApiProperty({ type: LecturerVideoLinkDto, isArray: true })
   videoLinks: LecturerVideoLinkDto[];

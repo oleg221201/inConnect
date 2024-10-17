@@ -19,6 +19,7 @@ import {
 import {
   LecturerModel,
   LecturerEducation,
+  LecturerTestimonials,
   LecturerLecture,
   LecturerVideoLink,
   LecturerWorkspace,
@@ -95,6 +96,18 @@ export class UpdateLecturerEducation implements LecturerEducation {
   @IsOptional()
   @IsDateString()
   to: Date;
+}
+
+export class UpdateLecturerTestimonials implements LecturerTestimonials {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  text: string;
 }
 
 export class UpdateLecturerVideoLink implements LecturerVideoLink {
@@ -188,6 +201,13 @@ export class UpdateLecturerDto implements Partial<LecturerModel> {
   @ValidateNested({ each: true })
   @Type(() => UpdateLecturerEducation)
   educations: UpdateLecturerEducation[];
+
+  @ApiProperty({ isArray: true, type: UpdateLecturerTestimonials })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => UpdateLecturerTestimonials)
+  testimonials: UpdateLecturerTestimonials[];
 
   @ApiProperty({ isArray: true, type: UpdateLecturerVideoLink })
   @IsOptional()

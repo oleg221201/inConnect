@@ -28,6 +28,7 @@ export class LecturerService {
       tags: [],
       workspaces: [],
       educations: [],
+      testimonials: [],
       videoLinks: [],
       lectures: [],
       createdAt: new Date(),

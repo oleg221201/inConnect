@@ -15,6 +15,7 @@ export interface LecturerModel {
   tags: Array<string>;
   workspaces: Array<LecturerWorkspace>;
   educations: Array<LecturerEducation>;
+  testimonials: Array<LecturerTestimonials>;
   videoLinks: Array<LecturerVideoLink>;
   lectures: Array<LecturerLecture>;
   userId: ObjectId;
@@ -35,6 +36,11 @@ export interface LecturerEducation {
   university: string;
   from: Date;
   to?: Date;
+}
+
+export interface LecturerTestimonials {
+  title: string;
+  text: string;
 }
 
 export interface LecturerVideoLink {
