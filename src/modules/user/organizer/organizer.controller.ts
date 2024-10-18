@@ -10,6 +10,7 @@ import {
   Query,
   Param,
   NotFoundException,
+  Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
@@ -106,14 +107,14 @@ export class OrganizerController {
     response: {
       description: 'Successfully got url',
       type: UploadUrlDto,
-      status: HttpStatus.OK,
+      status: HttpStatus.CREATED,
     },
     auth: true,
     possibleCodes: [HttpStatus.BAD_REQUEST],
   })
   @UseGuards(AccessTokenGuard)
   @Roles(UserRole.organizer)
-  @Get('/upload-company-logo')
+  @Post('/upload-company-logo')
   async getUploadUrl(
     @Request() request: RequestWithUser,
     @Query() query: UploadQueryDto,
