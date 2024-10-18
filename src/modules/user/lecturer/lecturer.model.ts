@@ -42,7 +42,8 @@ export interface LecturerLecture {
   time: string;
 }
 
-export interface LecturerWithUser {
+export interface LecturerProfileWithUser {
   lecturer: LecturerModel;
   user: UserModel;
+  minPrice: number | null;
 }

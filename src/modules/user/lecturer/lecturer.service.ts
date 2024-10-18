@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Collection, Filter, ObjectId } from 'mongodb';
 import { getCollectionProviderName } from '~utils/db.utils';
 import { collections } from '../../../services/db/db.constants';
-import { LecturerModel, LecturerWithUser } from './lecturer.model';
+import { LecturerModel, LecturerProfileWithUser } from './lecturer.model';
 import { UpdateLecturerDto } from './dto/update.dto';
 import { hashPassword } from '~utils/crypto.util';
 import { UserModel } from '../user.model';
@@ -46,12 +46,25 @@ export class LecturerService {
     return this.lecturerCollection.findOne({ _id: new ObjectId(id) });
   }
 
-  async findByIdWithUser(
+  async findProfileByIdWithUser(
     id: ObjectId | string,
-  ): Promise<LecturerWithUser | null> {
+  ): Promise<LecturerProfileWithUser | null> {
     const result = await this.lecturerCollection
       .aggregate([
         { $match: { _id: new ObjectId(id) } },
+        {
+          $addFields: {
+            minPrice: {
+              $min: {
+                $map: {
+                  input: '$lectures',
+                  as: 'lecture',
+                  in: '$$lecture.price',
+                },
+              },
+            },
+          },
+        },
         {
           $lookup: {
             from: 'users',
@@ -65,11 +78,12 @@ export class LecturerService {
 
     if (!result.length) return null;
 
-    const { users, ...organizer } = result[0];
+    const { users, minPrice, ...lecturer } = result[0];
 
     return {
-      lecturer: organizer as LecturerModel,
+      lecturer: lecturer as LecturerModel,
       user: users[0],
+      minPrice,
     };
   }
 

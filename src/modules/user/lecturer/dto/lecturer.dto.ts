@@ -4,6 +4,7 @@ import {
   LecturerLecture,
   LecturerModel,
   LecturerVideoLink,
+  LecturerProfileWithUser,
 } from '../lecturer.model';
 import { Exclude, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
@@ -103,7 +104,7 @@ export class LecturerDto implements LecturerModel {
   updatedAt: Date;
 }
 
-export class LecturerWithUserDto {
+export class LecturerProfileWithUserDto implements LecturerProfileWithUser {
   @ApiProperty()
   @Type(() => UserDto)
   user: UserDto;
@@ -111,4 +112,7 @@ export class LecturerWithUserDto {
   @ApiProperty()
   @Type(() => LecturerDto)
   lecturer: LecturerDto;
+
+  @ApiProperty()
+  minPrice: number;
 }
