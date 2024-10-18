@@ -17,6 +17,14 @@ class UserLocationDto {
   region: string;
 }
 
+class LecturerExperienceDto {
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  text: string;
+}
+
 class LecturerTestimonialsDto implements LecturerTestimonials {
   @ApiProperty()
   title: string;
@@ -69,6 +77,9 @@ export class LecturerDto implements LecturerModel {
 
   @ApiProperty()
   readyToTravel: boolean;
+
+  @ApiProperty()
+  experience: LecturerExperienceDto;
 
   @ApiProperty()
   tags: string[];

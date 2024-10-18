@@ -25,6 +25,7 @@ export class LecturerService {
       description: null,
       location: null,
       readyToTravel: null,
+      experience: null,
       tags: [],
       testimonials: [],
       videoLinks: [],

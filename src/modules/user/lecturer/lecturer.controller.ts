@@ -95,6 +95,6 @@ export class LecturerController {
 
     await this.lecturerService.update(lecturer._id, updateLecturerDto);
 
-    return { message: i18n.t('message.USER.SUCCESS_UPDATE') };
+    return { message: i18n.t('message.SUCCESS_UPDATE') };
   }
 }
