@@ -12,14 +12,14 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UseSwagger } from '~common/decorators/swagger.decorator';
-import { LecturerWithUser } from './lecturer.model';
+import { LecturerProfileWithUser } from './lecturer.model';
 import { LecturerService } from './lecturer.service';
 import { ClassSerializer } from '~common/interceptors/object-serializer.interceptor';
 import { AccessTokenGuard, RoleGuard } from '~common/guards';
 import { Roles } from '~common/decorators/roles.decorator';
 import { UserRole } from '../user.model';
 import { RequestWithUser } from '~common/interfaces/auth.interface';
-import { LecturerWithUserDto } from './dto/lecturer.dto';
+import { LecturerProfileWithUserDto } from './dto/lecturer.dto';
 import { DefaultMessageResponse } from '~common/responses';
 import { UpdateLecturerDto } from './dto/update.dto';
 import { IdValidationPipe } from '~common/pipes/validateId.pipe';
@@ -34,37 +34,43 @@ export class LecturerController {
     operation: { summary: 'Get lecturer based on accessToken' },
     response: {
       description: 'Successfully got lecturer',
-      type: LecturerWithUserDto,
+      type: LecturerProfileWithUserDto,
       status: HttpStatus.OK,
     },
     auth: true,
   })
-  @UseInterceptors(ClassSerializer(LecturerWithUserDto))
+  @UseInterceptors(ClassSerializer(LecturerProfileWithUserDto))
   @Roles(UserRole.lecturer)
   @UseGuards(AccessTokenGuard, RoleGuard)
   @Get('/me')
-  showMe(@Request() request: RequestWithUser): LecturerWithUser {
-    const { lecturer, ...user } = request.user;
-    return { user, lecturer };
+  async showMe(
+    @Request() request: RequestWithUser,
+  ): Promise<LecturerProfileWithUser> {
+    const lecturerId = request.user.lecturer._id;
+    const result =
+      await this.lecturerService.findProfileByIdWithUser(lecturerId);
+
+    return result;
   }
 
   @UseSwagger({
     operation: { summary: 'Get organizer based on id' },
     response: {
       description: 'Successfully got organizer',
-      type: LecturerWithUserDto,
+      type: LecturerProfileWithUserDto,
       status: HttpStatus.OK,
     },
     auth: true,
   })
-  @UseInterceptors(ClassSerializer(LecturerWithUserDto))
-  @UseGuards(AccessTokenGuard)
+  @UseInterceptors(ClassSerializer(LecturerProfileWithUserDto))
+  @Roles(UserRole.organizer)
+  @UseGuards(AccessTokenGuard, RoleGuard)
   @Get('/:id')
   async show(
     @Param('id', IdValidationPipe) id: string,
     @I18n() i18n: I18nContext,
-  ): Promise<LecturerWithUser> {
-    const result = await this.lecturerService.findByIdWithUser(id);
+  ): Promise<LecturerProfileWithUser> {
+    const result = await this.lecturerService.findProfileByIdWithUser(id);
 
     if (!result) {
       throw new NotFoundException(i18n.t('error.LECTURER.NOT_FOUND'));
