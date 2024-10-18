@@ -2,6 +2,7 @@
     "AUTH.INVALID_LOGIN_DATA": "Невалідні дані",
     "AUTH.LOGIN_TO_PERFORM": "Увійдіть, щоб виконати цю дію.",
     "AUTH.REFRESH_NOT_FOUND": "Застарілий або неактивний refreshToken.",
+    "AUTH.INVALID_MASTER_KEY": "Master key невірний або ненаданий.",
     "USER.EMAIL_TAKEN": "Користувач з такою поштою вже існує.",
     "ORGANIZER.NOT_FOUND": "Організатора не знайдено.",
     "LECTURER.NOT_FOUND": "Лектора не знайдено.",

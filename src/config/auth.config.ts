@@ -11,6 +11,8 @@ export const authConfig = registerAs(AUTH_CONFIG, (): AuthConfig => {
 
     JWT_REFRESH_EXPIRES,
     JWT_REFRESH_SECRET,
+
+    MASTER_KEY,
   } = process.env;
 
   return {
@@ -19,5 +21,7 @@ export const authConfig = registerAs(AUTH_CONFIG, (): AuthConfig => {
 
     refreshSecret: JWT_REFRESH_SECRET || 'refreshSecret',
     refreshExpires: JWT_REFRESH_EXPIRES || '7d',
+
+    masterKey: MASTER_KEY || 'defaultMasterKey',
   };
 });
