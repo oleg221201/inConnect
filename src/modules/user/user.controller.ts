@@ -62,8 +62,10 @@ export class UserController {
     switch (createUserDto.role) {
       case UserRole.organizer:
         await this.organizerService.create(newUser._id);
+        break;
       case UserRole.lecturer:
         await this.lecturerService.create(newUser._id);
+        break;
     }
 
     return { message: `The ${createUserDto.role} was successfully created.` };
