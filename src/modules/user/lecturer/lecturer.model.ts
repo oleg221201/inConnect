@@ -12,6 +12,10 @@ export interface LecturerModel {
     region: string;
   };
   readyToTravel: boolean;
+  experience: {
+    title: string;
+    text: string;
+  };
   tags: Array<string>;
   testimonials: Array<LecturerTestimonials>;
   videoLinks: Array<LecturerVideoLink>;

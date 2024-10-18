@@ -40,6 +40,19 @@ export class UpdateLecturerLocation {
   region: string;
 }
 
+export class UpdateLecturerExperience {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(2800)
+  text: string;
+}
+
 export class UpdateLecturerTestimonials implements LecturerTestimonials {
   @ApiProperty()
   @IsNotEmpty()
@@ -118,6 +131,12 @@ export class UpdateLecturerDto implements Partial<LecturerModel> {
   @Type(() => UpdateLecturerLocation)
   @IsNotEmpty()
   location: UpdateLecturerLocation;
+
+  @ApiProperty({ type: UpdateLecturerExperience })
+  @ValidateNested()
+  @Type(() => UpdateLecturerExperience)
+  @IsNotEmpty()
+  experience: UpdateLecturerExperience;
 
   @ApiProperty()
   @IsNotEmpty()
