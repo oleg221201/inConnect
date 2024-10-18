@@ -13,29 +13,12 @@ export interface LecturerModel {
   };
   readyToTravel: boolean;
   tags: Array<string>;
-  workspaces: Array<LecturerWorkspace>;
-  educations: Array<LecturerEducation>;
   testimonials: Array<LecturerTestimonials>;
   videoLinks: Array<LecturerVideoLink>;
   lectures: Array<LecturerLecture>;
   userId: ObjectId;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export interface LecturerWorkspace {
-  jobTitle: string;
-  companyName: string;
-  industry: string;
-  from: Date;
-  to?: Date;
-}
-
-export interface LecturerEducation {
-  speciality: string;
-  university: string;
-  from: Date;
-  to?: Date;
 }
 
 export interface LecturerTestimonials {

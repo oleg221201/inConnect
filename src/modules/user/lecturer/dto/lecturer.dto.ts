@@ -1,11 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  LecturerEducation,
   LecturerTestimonials,
   LecturerLecture,
   LecturerModel,
   LecturerVideoLink,
-  LecturerWorkspace,
 } from '../lecturer.model';
 import { Exclude, Type } from 'class-transformer';
 import { ObjectId } from 'mongodb';
@@ -17,37 +15,6 @@ class UserLocationDto {
 
   @ApiProperty()
   region: string;
-}
-
-class LecturerWorkspaceDto implements LecturerWorkspace {
-  @ApiProperty()
-  jobTitle: string;
-
-  @ApiProperty()
-  companyName: string;
-
-  @ApiProperty()
-  industry: string;
-
-  @ApiProperty()
-  from: Date;
-
-  @ApiProperty()
-  to?: Date;
-}
-
-class LecturerEducationDto implements LecturerEducation {
-  @ApiProperty()
-  speciality: string;
-
-  @ApiProperty()
-  university: string;
-
-  @ApiProperty()
-  from: Date;
-
-  @ApiProperty()
-  to?: Date;
 }
 
 class LecturerTestimonialsDto implements LecturerTestimonials {
@@ -105,12 +72,6 @@ export class LecturerDto implements LecturerModel {
 
   @ApiProperty()
   tags: string[];
-
-  @ApiProperty({ type: LecturerWorkspaceDto, isArray: true })
-  workspaces: LecturerWorkspaceDto[];
-
-  @ApiProperty({ type: LecturerEducationDto, isArray: true })
-  educations: LecturerEducationDto[];
 
   @ApiProperty({ type: LecturerTestimonialsDto, isArray: true })
   testimonials: LecturerTestimonialsDto[];

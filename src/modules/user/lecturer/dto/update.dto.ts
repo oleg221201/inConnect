@@ -3,7 +3,6 @@ import {
   ArrayNotEmpty,
   IsArray,
   IsBoolean,
-  IsDateString,
   IsIn,
   IsNotEmpty,
   IsNumber,
@@ -18,19 +17,12 @@ import {
 } from 'class-validator';
 import {
   LecturerModel,
-  LecturerEducation,
   LecturerTestimonials,
   LecturerLecture,
   LecturerVideoLink,
-  LecturerWorkspace,
 } from '../lecturer.model';
 import { passwordRegex } from '../../dto/user.dto';
-import {
-  CITIES_LIST,
-  INDUSTRIES_LIST,
-  REGIONS_LIST,
-  TAGS_LIST,
-} from '~common/constants';
+import { CITIES_LIST, REGIONS_LIST, TAGS_LIST } from '~common/constants';
 import { Type } from 'class-transformer';
 import { LECTURE_TIME_LIST } from '~common/constants/lecture-time.constant';
 
@@ -46,56 +38,6 @@ export class UpdateLecturerLocation {
   @IsString()
   @IsIn(REGIONS_LIST)
   region: string;
-}
-
-export class UpdateLecturerWorkspace implements LecturerWorkspace {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  jobTitle: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  companyName: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  @IsIn(INDUSTRIES_LIST, { message: 'Choose valid industry' })
-  industry: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsDateString()
-  from: Date;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsDateString()
-  to: Date;
-}
-
-export class UpdateLecturerEducation implements LecturerEducation {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  speciality: string;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  university: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsDateString()
-  from: Date;
-
-  @ApiProperty()
-  @IsOptional()
-  @IsDateString()
-  to: Date;
 }
 
 export class UpdateLecturerTestimonials implements LecturerTestimonials {
@@ -187,20 +129,6 @@ export class UpdateLecturerDto implements Partial<LecturerModel> {
   @ArrayNotEmpty()
   @IsIn(TAGS_LIST, { each: true, message: 'Choose valid tags' })
   tags: string[];
-
-  @ApiProperty({ isArray: true, type: UpdateLecturerWorkspace })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => UpdateLecturerWorkspace)
-  workspaces: UpdateLecturerWorkspace[];
-
-  @ApiProperty({ isArray: true, type: UpdateLecturerEducation })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => UpdateLecturerEducation)
-  educations: UpdateLecturerEducation[];
 
   @ApiProperty({ isArray: true, type: UpdateLecturerTestimonials })
   @IsOptional()
