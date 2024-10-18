@@ -24,6 +24,7 @@ import { generateUploadUrl } from 'src/services/aws/s3';
 import { AccessTokenGuard } from '~common/guards';
 import { I18n, I18nContext } from 'nestjs-i18n';
 import { ProfilePictureDto } from './dto/profile-picture.dto';
+import { MasterKeyGuard } from '~common/guards/masterKey.guard';
 
 @ApiTags('Users')
 @Controller('user')
@@ -41,8 +42,10 @@ export class UserController {
       type: DefaultMessageResponse,
       status: HttpStatus.CREATED,
     },
+    auth: true,
     possibleCodes: [HttpStatus.BAD_REQUEST],
   })
+  @UseGuards(MasterKeyGuard)
   @Post()
   async create(
     @Body() createUserDto: CreateUserDto,

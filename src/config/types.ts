@@ -18,6 +18,8 @@ export type AuthConfig = {
 
   refreshSecret: string;
   refreshExpires: string;
+
+  masterKey: string;
 };
 
 export type AwsConfig = {
