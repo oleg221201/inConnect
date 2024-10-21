@@ -91,7 +91,7 @@ export class UpdateLecturerLecture implements LecturerLecture {
   description: string;
 
   @ApiProperty()
-  @IsOptional()
+  @IsNotEmpty()
   @IsNumber()
   price: number;
 
